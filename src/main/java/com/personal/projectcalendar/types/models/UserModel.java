@@ -1,22 +1,25 @@
 package com.personal.projectcalendar.types.models;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class UserModel {
     @NotNull
-    private String userName;
+    @NotBlank
+    private String username;
     @NotNull
+    @NotBlank
     private String password;
 
     public UserModel() {}
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -36,14 +39,14 @@ public class UserModel {
             return false;
         }
         UserModel userModel = (UserModel) o;
-        return Objects.equals(userName, userModel.userName) &&
+        return Objects.equals(username, userModel.username) &&
                 Objects.equals(password, userModel.password);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                userName,
+                username,
                 password);
     }
 }

@@ -1,16 +1,13 @@
 package com.personal.projectcalendar.types;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.personal.projectcalendar.utilities.UserUtilities;
 
-import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "Calendar_users")
 public class User {
-    private String userId;
-    private String userName;
+    private String userid;
+    private String username;
     private String hash;
     private String salt;
 
@@ -20,28 +17,29 @@ public class User {
     public User() {}
 
     private User(User.Builder builder) {
-        this.userId     = builder.userId;
-        this.userName   = builder.userName;
+        this.userid     = builder.userid;
+        this.username   = builder.username;
         this.hash       = builder.hash;
         this.salt       = builder.salt;
     }
 
     @DynamoDBHashKey(attributeName = "user_id")
-    public String getUserId() {
-        return userId;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "user_name")
-    public String getUserName() {
-        return userName;
+    @DynamoDBAttribute(attributeName = "user_name")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "user_name-index")
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @DynamoDBAttribute(attributeName = "user_hash")
@@ -71,8 +69,8 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return userId.equals(user.userId) &&
-                userName.equals(user.userName) &&
+        return userid.equals(user.userid) &&
+                username.equals(user.username) &&
                 hash.equals(user.hash) &&
                 salt.equals(user.salt);
     }
@@ -80,8 +78,8 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(
-                userId,
-                userName,
+                userid,
+                username,
                 hash,
                 salt);
     }
@@ -91,20 +89,20 @@ public class User {
     }
 
     public static class Builder {
-        private String userId;
-        private String userName;
+        private String userid;
+        private String username;
         private String hash;
         private String salt;
 
         private Builder() {}
 
-        public Builder withUserId(String theUserId) {
-            this.userId = theUserId;
+        public Builder withUserid(String theUserid) {
+            this.userid = theUserid;
             return this;
         }
 
-        public Builder withUserName(String theUserName) {
-            this.userName = theUserName;
+        public Builder withUsername(String theUsername) {
+            this.username = theUsername;
             return this;
         }
 

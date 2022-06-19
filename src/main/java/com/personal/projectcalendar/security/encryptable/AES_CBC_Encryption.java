@@ -1,4 +1,6 @@
-package com.personal.projectcalendar.utilities;
+package com.personal.projectcalendar.security.encryptable;
+
+import com.personal.projectcalendar.security.encryptable.Encryptable;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -17,16 +19,16 @@ import java.util.Base64;
  *          https://mkyong.com/java/java-aes-encryption-and-decryption/
  *          https://www.javainterviewpoint.com/java-aes-256-gcm-encryption-and-decryption/
  */
-public final class AES_CBC {
-    private static final String ENCRYPT_ALGO    = "AES/ECB/PKCS5Padding";
-    private static final String HASH_FUNCTION   = "SHA-1";
-    private static final String ALGO_FUNCTION   = "AES";
-    private static final Charset CHARSET        = StandardCharsets.UTF_8;
+public final class AES_CBC_Encryption implements Encryptable {
+    private final String ENCRYPT_ALGO    = "AES/ECB/PKCS5Padding";
+    private final String HASH_FUNCTION   = "SHA-1";
+    private final String ALGO_FUNCTION   = "AES";
+    private final Charset CHARSET        = StandardCharsets.UTF_8;
 
     /**
-     * Do not Instantiate.
+     * No argument constructor.
      */
-    private AES_CBC() {}
+    public AES_CBC_Encryption() {}
 
     /**
      * Utility method that encrypts a String.
@@ -34,10 +36,11 @@ public final class AES_CBC {
      * @param secret String to encrypt with.
      * @return The encrypted String.
      */
-    public static String encryptMessage(final String msgToEncrypt, final String secret) {
+    @Override
+    public String encryptMessage(final String msgToEncrypt, final String secret) {
         try {
             Cipher cipher = Cipher.getInstance(ENCRYPT_ALGO);
-            cipher.init(Cipher.ENCRYPT_MODE, AES_CBC.fetchKey(secret));
+            cipher.init(Cipher.ENCRYPT_MODE, this.fetchKey(secret));
 
             return Base64.getEncoder()
                     .encodeToString(cipher.doFinal(msgToEncrypt.getBytes(CHARSET)));
@@ -52,10 +55,11 @@ public final class AES_CBC {
      * @param secret String to decrypt with.
      * @return The decrypted String.
      */
-    public static String decryptMessage(final String msgToDecrypt, final String secret) {
+    @Override
+    public String decryptMessage(final String msgToDecrypt, final String secret) {
         try {
             Cipher cipher = Cipher.getInstance(ENCRYPT_ALGO);
-            cipher.init(Cipher.DECRYPT_MODE, AES_CBC.fetchKey(secret));
+            cipher.init(Cipher.DECRYPT_MODE, this.fetchKey(secret));
 
             return new String(cipher.doFinal(Base64.getDecoder().decode(msgToDecrypt)));
         } catch (Exception e) {
@@ -67,7 +71,7 @@ public final class AES_CBC {
      * Generates a secrete key spec for encryption and decryption.
      * @param key String to generate a key.
      */
-    private static SecretKeySpec fetchKey(final String key)
+    private SecretKeySpec fetchKey(final String key)
             throws NoSuchAlgorithmException {
         MessageDigest sha;
         byte[] byteKey;

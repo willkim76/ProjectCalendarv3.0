@@ -1,16 +1,19 @@
 package com.personal.projectcalendar.utilites;
 
-import com.personal.projectcalendar.utilities.AES_CBC;
+import com.personal.projectcalendar.security.encryptable.AES_CBC_Encryption;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AESTests {
+    private AES_CBC_Encryption encryption;
+
+    @BeforeEach
+    void setup() {
+        this.encryption = new AES_CBC_Encryption();
+    }
 
     @Test
     @Order(1)
@@ -20,7 +23,7 @@ public class AESTests {
         String msg = "Test Message";
 
         // WHEN
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // THEN
         assertNotEquals(msg, encrypted);
@@ -32,10 +35,10 @@ public class AESTests {
         // GIVEN
         String key = "Test Key";
         String msg = "Test Message";
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // WHEN
-        String decrypted = AES_CBC.decryptMessage(encrypted, key);
+        String decrypted = encryption.decryptMessage(encrypted, key);
 
         // THEN
         assertEquals(msg, decrypted);
@@ -49,7 +52,7 @@ public class AESTests {
         String msg = "";
 
         // WHEN
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // THEN
         assertNotEquals(msg, encrypted);
@@ -61,10 +64,10 @@ public class AESTests {
         // GIVEN
         String key = "Test Key";
         String msg = "";
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // WHEN
-        String decrypted = AES_CBC.decryptMessage(encrypted, key);
+        String decrypted = encryption.decryptMessage(encrypted, key);
 
         // THEN
         assertEquals(decrypted, msg);
@@ -78,7 +81,7 @@ public class AESTests {
         String msg = "Test Message";
 
         // WHEN
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // THEN
         assertNotEquals(msg, encrypted);
@@ -90,10 +93,10 @@ public class AESTests {
         // GIVEN
         String key = "";
         String msg = "Test Message";
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // WHEN
-        String decrypted = AES_CBC.decryptMessage(encrypted, key);
+        String decrypted = encryption.decryptMessage(encrypted, key);
 
         // THEN
         assertEquals(decrypted, msg);
@@ -105,13 +108,13 @@ public class AESTests {
         String key = "Test Key";
         String badKey = "Test Kee";
         String msg = "Te";
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // WHEN - THEN
         assertThrows(IllegalArgumentException.class, () -> {
-            String decrypted = AES_CBC.decryptMessage(msg, badKey);
+            String decrypted = encryption.decryptMessage(msg, badKey);
 
-            // If AES_CBC::decrypt does not throw IllegalArgumentException
+            // If AES_CBC_Encryption::decrypt does not throw IllegalArgumentException
             if (!decrypted.equals(msg)) {
                 System.out.println("Did not throw Exception");
                 throw new IllegalArgumentException();
@@ -126,7 +129,7 @@ public class AESTests {
         String msg = "Test Message";
 
         // WHEN THEN
-        assertThrows(IllegalArgumentException.class, () -> AES_CBC.encryptMessage(msg, key));
+        assertThrows(IllegalArgumentException.class, () -> encryption.encryptMessage(msg, key));
     }
 
     @Test
@@ -136,7 +139,7 @@ public class AESTests {
         String msg = null;
 
         // WHEN THEN
-        assertThrows(IllegalArgumentException.class, () -> AES_CBC.encryptMessage(msg, key));
+        assertThrows(IllegalArgumentException.class, () -> encryption.encryptMessage(msg, key));
     }
 
     @Test
@@ -144,10 +147,10 @@ public class AESTests {
         // GIVEN
         String key = "Test Key";
         String msg = null;
-        String encrypted = AES_CBC.encryptMessage(msg, key);
+        String encrypted = encryption.encryptMessage(msg, key);
 
         // WHEN
-        String decrypted = AES_CBC.decryptMessage(encrypted, key);
+        String decrypted = encryption.decryptMessage(encrypted, key);
 
         // THEN
         assertNotNull(encrypted);

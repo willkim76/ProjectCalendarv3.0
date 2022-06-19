@@ -10,4 +10,5 @@ public class EventUtilities {
     public static String generateEventId() {
         return String.format("event:%s", UUID.randomUUID());
     }
+
 }

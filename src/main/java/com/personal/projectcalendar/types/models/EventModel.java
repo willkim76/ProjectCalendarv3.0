@@ -1,13 +1,17 @@
 package com.personal.projectcalendar.types.models;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * Defines the
+ */
 public class EventModel {
-    @NotNull
-    private String userId;
+    @NotBlank
     @NotNull
     private String startDateTime;
+    @NotBlank
     @NotNull
     private String endDateTime;
 
@@ -15,14 +19,6 @@ public class EventModel {
     private String eventBody;
 
     public EventModel() {}
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getStartDateTime() {
         return startDateTime;
@@ -65,8 +61,7 @@ public class EventModel {
             return false;
         }
         EventModel that = (EventModel) o;
-        return Objects.equals(userId, that.userId) &&
-                Objects.equals(startDateTime, that.startDateTime) &&
+        return Objects.equals(startDateTime, that.startDateTime) &&
                 Objects.equals(endDateTime, that.endDateTime) &&
                 Objects.equals(eventTitle, that.eventTitle) &&
                 Objects.equals(eventBody, that.eventBody);
@@ -75,7 +70,6 @@ public class EventModel {
     @Override
     public int hashCode() {
         return Objects.hash(
-                userId,
                 startDateTime,
                 endDateTime,
                 eventTitle,

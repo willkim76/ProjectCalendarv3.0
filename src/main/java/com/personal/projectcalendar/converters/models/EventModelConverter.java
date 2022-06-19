@@ -6,15 +6,11 @@ import com.personal.projectcalendar.utilities.EventUtilities;
 
 public class EventModelConverter {
 
-    public static Event convert(EventModel eventModel) {
-        // validate start before end
-        // validate start does not overlap with another event
-        // validate end does not overlap with another event
-
+    public static Event convert(EventModel eventModel, String userid) {
 
 //        return Event.builder()
 //                .withEventId(EventUtilities.generateEventId())
-//                .withUserId(eventModel.getUserId())
+//                .withUserId(userId)
 //                .withSrtZonedDateTime()
 //                .withEndZonedDateTime()
 //                .withEventTitle()

@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+    id 'com.palantir.docker' version '0.33.0'
 }
 
 group = 'com.personal'
@@ -12,6 +13,19 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'projectcalendar'
+    }
+}
+
+docker {
+    name "${project.name}"
+    dockerfile file('src/docker/Dockerfile')
+    copySpec.from(jar).rename(".*", "app.jar")
+    buildArgs(['JAR_FILE': "app.jar"])
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -20,6 +34,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.0'
 
+    // https://mvnrepository.com/artifact/com.palantir.gradle.docker/gradle-docker
+    implementation group: 'com.palantir.gradle.docker', name: 'gradle-docker', version: '0.33.0'
 
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
@@ -50,3 +66,5 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+

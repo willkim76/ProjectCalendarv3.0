@@ -6,7 +6,12 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = {DaoModule.class, DynamoDBModule.class})
+@Component(modules = {
+        CacheModule.class,
+        DaoModule.class,
+        DynamoDBModule.class,
+        SecurityModule.class
+})
 public interface ServiceComponents {
 
     AddEventActivity provideAddEventActivity();

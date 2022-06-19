@@ -1,23 +1,25 @@
 package com.personal.projectcalendar.converters.models;
 
+import com.personal.projectcalendar.security.hashable.Hashable;
+import com.personal.projectcalendar.security.hashable.PBKDF2_Hash;
 import com.personal.projectcalendar.types.User;
 import com.personal.projectcalendar.types.models.UserModel;
-import com.personal.projectcalendar.utilities.UserUtilities;
+
+import static com.personal.projectcalendar.utilities.UserUtilities.generateUserId;
 
 public class UserModelConverter {
 
     private UserModelConverter() {}
 
-    public static User convertToUser(UserModel userModel) {
-        String salt = UserUtilities.generateSalt();
+    public static User convertToUser(UserModel userModel,
+                                     String theHash,
+                                     String theSalt) {
 
         return User.builder()
-                .withUserId(UserUtilities.generateUserId())
-                .withUserName(userModel.getUserName())
-                .withHash(
-                        UserUtilities.generatePBKDF2Hash(userModel.getPassword(), salt)
-                )
-                .withSalt(salt)
+                .withUserid(generateUserId())
+                .withUsername(userModel.getUsername())
+                .withHash(theHash)
+                .withSalt(theSalt)
                 .build();
     }
 

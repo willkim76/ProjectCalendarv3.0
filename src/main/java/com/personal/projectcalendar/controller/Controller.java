@@ -14,6 +14,7 @@ import com.personal.projectcalendar.types.requests.GetEventsRequest;
 import com.personal.projectcalendar.types.requests.UserLoginRequest;
 import com.personal.projectcalendar.types.responses.AddUserResponse;
 
+import com.personal.projectcalendar.types.responses.UserLoginResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +27,12 @@ import javax.validation.Valid;
 public class Controller {
     private static final ServiceComponents components = ProjectCalendarApplication.components;
 
-    @GetMapping(value = "events/{user_id}")
+    @GetMapping(value = "events/{username}")
     public ResponseEntity<?> getEvents(
             @CookieValue (value = "userId", defaultValue = "STOP") String userId,
-            @PathVariable String user_id,
-            @RequestParam String command) {
+            @PathVariable String username,
+            @RequestParam String command,
+            HttpServletResponse response) {
         GetEventsActivity activity = components.provideGetEventActivity();
 
         GetEventsRequest request = null;
@@ -41,11 +43,13 @@ public class Controller {
     @PostMapping(value = "events")
     public ResponseEntity<?> addEvent(
             @CookieValue (value = "userId", defaultValue = "STOP") String userId,
-            @Valid @RequestBody EventModel eventModel) {
+            @Valid @RequestBody EventModel eventModel,
+            HttpServletResponse response) {
         AddEventActivity activity = components.provideAddEventActivity();
 
         AddEventRequest request = AddEventRequest.builder()
                 .withEventModel(eventModel)
+                .withUserId("the userId from cookie")
                 .build();
 
         return new ResponseEntity<>(activity.execute(request), HttpStatus.OK);
@@ -71,26 +75,29 @@ public class Controller {
 
     @GetMapping(value = "users/login")
     public ResponseEntity<?> login(
+            @CookieValue (value = "userId", defaultValue = "STOP") String userId,
             @Valid @RequestBody UserModel userModel,
-            HttpServletResponse response) {
+            HttpServletResponse httpResponse) {
+
         UserLoginActivity activity = components.provideUserLoginActivity();
 
         UserLoginRequest request = UserLoginRequest.builder()
                 .withUserModel(userModel)
                 .build();
 
-        activity.execute(request);
+        UserLoginResponse response = activity.execute(request);
 
-        // validate login
+        if (!response.getMessage().equals("USERNAME DNE") &&
+                !response.getMessage().equals("PASSWORD INC")) {
+            Cookie cookie = new Cookie("userId", response.getMessage());
+            cookie.setMaxAge(5 * 60 * 60);
 
-        // Assign cookie
+            httpResponse.addCookie(cookie);
+        } else {
+            
+        }
 
-        Cookie cookie = new Cookie("userId", "Actual_value");
-        cookie.setMaxAge(5 * 60 * 60);
-
-        response.addCookie(cookie);
-
-        return new ResponseEntity<>("ResponseEntity.accepted()", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

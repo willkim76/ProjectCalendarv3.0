@@ -3,7 +3,7 @@ package com.personal.projectcalendar.dependencies;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.personal.projectcalendar.daos.EventDao;
 import com.personal.projectcalendar.daos.UserDao;
-import com.personal.projectcalendar.daos.cache.UserDaoCache;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,9 +25,4 @@ public class DaoModule {
         return new UserDao(dynamoDBMapper);
     }
 
-    @Provides
-    @Singleton
-    public UserDaoCache provideUserDaoCache(UserDao userDao) {
-        return new UserDaoCache(userDao);
-    }
 }
