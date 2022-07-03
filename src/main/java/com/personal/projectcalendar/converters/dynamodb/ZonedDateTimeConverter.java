@@ -1,4 +1,4 @@
-package com.personal.projectcalendar.converters;
+package com.personal.projectcalendar.converters.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 

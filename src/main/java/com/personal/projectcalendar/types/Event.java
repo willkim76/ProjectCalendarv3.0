@@ -1,7 +1,7 @@
 package com.personal.projectcalendar.types;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.personal.projectcalendar.converters.ZonedDateTimeConverter;
+import com.personal.projectcalendar.converters.dynamodb.ZonedDateTimeConverter;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;

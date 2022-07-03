@@ -1,7 +1,5 @@
 package com.personal.projectcalendar.converters.models;
 
-import com.personal.projectcalendar.security.hashable.Hashable;
-import com.personal.projectcalendar.security.hashable.PBKDF2_Hash;
 import com.personal.projectcalendar.types.User;
 import com.personal.projectcalendar.types.models.UserModel;
 
@@ -14,9 +12,8 @@ public class UserModelConverter {
     public static User convertToUser(UserModel userModel,
                                      String theHash,
                                      String theSalt) {
-
         return User.builder()
-                .withUserid(generateUserId())
+                .withUserId(generateUserId())
                 .withUsername(userModel.getUsername())
                 .withHash(theHash)
                 .withSalt(theSalt)
@@ -24,6 +21,9 @@ public class UserModelConverter {
     }
 
     public static UserModel revertToUserModel(User user) {
-        throw new UnsupportedOperationException();
+        return UserModel.builder()
+                .withUsername(user.getUsername())
+                .withPassword(null)
+                .build();
     }
 }

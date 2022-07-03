@@ -10,6 +10,7 @@ public class ProjectCalendarApplication {
 	public static final ServiceComponents components = DaggerServiceComponents.create();
 
 	public static void main(String[] args) {
+		System.setProperty("server.servlet.context-path", "/api/v1");
 		SpringApplication.run(ProjectCalendarApplication.class, args);
 	}
 }

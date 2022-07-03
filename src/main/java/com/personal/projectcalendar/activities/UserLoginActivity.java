@@ -24,14 +24,20 @@ public class UserLoginActivity {
         UserModel userToVerify = request.getUserModel();
         Optional<User> user = userDaoCache.getUser(userToVerify.getUsername());
 
-        boolean verified = false;
+        String message = "USERNAME DNE";
+
         if (user.isPresent()) {
-            String hashToVerify = hashable.generateHash(userToVerify.getPassword(), user.get().getSalt());
-            verified = user.get().getHash().equals(hashToVerify);
+            User existingUser = user.get();
+            String hashToVerify = hashable.generateHash(userToVerify.getPassword(),
+                    existingUser.getSalt());
+
+            message = existingUser.getHash().equals(hashToVerify) ?
+                    existingUser.getUserId() :
+                    "PASSWORD INC";
         }
 
         return UserLoginResponse.builder()
-                .withMessage(user.isPresent() ? verified ? user.get().getUserid() : "PASSWORD INC" : "USERNAME DNE")
+                .withMessage(message)
                 .build();
     }
 }

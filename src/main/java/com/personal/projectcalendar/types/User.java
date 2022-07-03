@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "Calendar_users")
 public class User {
-    private String userid;
+    private String userId;
     private String username;
     private String hash;
     private String salt;
@@ -17,19 +17,19 @@ public class User {
     public User() {}
 
     private User(User.Builder builder) {
-        this.userid     = builder.userid;
+        this.userId = builder.userId;
         this.username   = builder.username;
         this.hash       = builder.hash;
         this.salt       = builder.salt;
     }
 
     @DynamoDBHashKey(attributeName = "user_id")
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @DynamoDBAttribute(attributeName = "user_name")
@@ -69,7 +69,7 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return userid.equals(user.userid) &&
+        return userId.equals(user.userId) &&
                 username.equals(user.username) &&
                 hash.equals(user.hash) &&
                 salt.equals(user.salt);
@@ -78,7 +78,7 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(
-                userid,
+                userId,
                 username,
                 hash,
                 salt);
@@ -89,15 +89,15 @@ public class User {
     }
 
     public static class Builder {
-        private String userid;
+        private String userId;
         private String username;
         private String hash;
         private String salt;
 
         private Builder() {}
 
-        public Builder withUserid(String theUserid) {
-            this.userid = theUserid;
+        public Builder withUserId(String theUserId) {
+            this.userId = theUserId;
             return this;
         }
 
