@@ -2,13 +2,12 @@ package com.personal.projectcalendar.controllers;
 
 import com.personal.projectcalendar.ProjectCalendarApplication;
 import com.personal.projectcalendar.activities.AddUserActivity;
-import com.personal.projectcalendar.activities.UserLoginActivity;
+import com.personal.projectcalendar.activities.EditUserActivity;
 import com.personal.projectcalendar.dependencies.ServiceComponents;
 import com.personal.projectcalendar.types.models.UserModel;
 import com.personal.projectcalendar.types.requests.AddUserRequest;
-import com.personal.projectcalendar.types.requests.UserLoginRequest;
 import com.personal.projectcalendar.types.responses.AddUserResponse;
-import com.personal.projectcalendar.types.responses.UserLoginResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +44,30 @@ public class UserController {
             return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
         }
 
-        Cookie cookie = new Cookie("userId", response.getUserId());
-        httpResponse.addCookie(cookie);
+        httpResponse.addCookie(
+                this.generateUserIdCookie(response.getUserId(), COOKIE_EXPIRATION_HOURS));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // TODO
+    @PutMapping(value = "users")
+    public ResponseEntity<?> updateUser(
+            @CookieValue(value = "userId", defaultValue = "STOP") String userId,
+            @Valid @RequestBody UserModel userModel,
+            HttpServletResponse response) {
 
+        EditUserActivity activity = components.provideEditUserActivity();
+
+        return null;
+    }
+
+    private Cookie generateUserIdCookie(String userId, int maxTimeHrs) {
+        Cookie cookie = new Cookie("userId", userId);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(maxTimeHrs * 60 * 60);
+
+        return cookie;
+    }
 }

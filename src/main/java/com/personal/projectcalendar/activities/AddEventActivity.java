@@ -16,7 +16,6 @@ public class AddEventActivity {
     private final Hashable hashable;
     private final UserDao userDao;
 
-
     @Inject
     public AddEventActivity(EventDao eventDao,
                             UserDao userDao,
