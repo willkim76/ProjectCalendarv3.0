@@ -22,7 +22,7 @@ of the Spring Boot application have been left in their default states such as th
 used to authenticate and validate HTTP method calls to the API endpoints when altering a User or Event entities which
 implements 
 
-####User Stories:
+#### User Stories:
 * As a user I want to be able to create a User account
 * As a user I want to be able to modify a User account
 * As a user I want to be able to delete a User account
