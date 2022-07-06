@@ -1,4 +1,4 @@
-package com.personal.projectcalendar.types;
+package com.personal.projectcalendar.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 

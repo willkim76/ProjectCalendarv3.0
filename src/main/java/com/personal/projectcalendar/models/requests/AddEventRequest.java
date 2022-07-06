@@ -1,18 +1,18 @@
-package com.personal.projectcalendar.types.requests;
+package com.personal.projectcalendar.models.requests;
 
-import com.personal.projectcalendar.types.models.EventModel;
+import com.personal.projectcalendar.models.dtos.EventDto;
 
 public class AddEventRequest {
-    private final EventModel eventModel;
+    private final EventDto eventDto;
     private final String userId;
 
     private AddEventRequest(AddEventRequest.Builder builder) {
-        this.eventModel = builder.eventModel;
+        this.eventDto = builder.eventDTO;
         this.userId = builder.userId;
     }
 
-    public EventModel getEventModel() {
-        return eventModel;
+    public EventDto getEventModel() {
+        return eventDto;
     }
 
     public String getUserId() {
@@ -24,13 +24,13 @@ public class AddEventRequest {
     }
 
     public static class Builder {
-        private EventModel eventModel;
+        private EventDto eventDTO;
         private String userId;
 
         private Builder() {}
 
-        public Builder withEventModel(EventModel theEventModel) {
-            this.eventModel = theEventModel;
+        public Builder withEventModel(EventDto theEventDto) {
+            this.eventDTO = theEventDto;
             return this;
         }
 

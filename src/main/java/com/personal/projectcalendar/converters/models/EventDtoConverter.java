@@ -1,12 +1,11 @@
 package com.personal.projectcalendar.converters.models;
 
-import com.personal.projectcalendar.types.Event;
-import com.personal.projectcalendar.types.models.EventModel;
-import com.personal.projectcalendar.utilities.EventUtilities;
+import com.personal.projectcalendar.models.Event;
+import com.personal.projectcalendar.models.dtos.EventDto;
 
-public class EventModelConverter {
+public class EventDtoConverter {
 
-    public static Event convert(EventModel eventModel, String userid) {
+    public static Event convert(EventDto eventDTO, String userId) {
 
 //        return Event.builder()
 //                .withEventId(EventUtilities.generateEventId())
@@ -19,7 +18,7 @@ public class EventModelConverter {
         return null;
     }
 
-    public static EventModel revert(Event event) {
+    public static EventDto revert(Event event) {
         return null;
     }
 }

@@ -1,0 +1,38 @@
+@startuml
+class Event {
+- eventId String
+- userId String
+- srtDateTime ZonedDateTime
+- endDateTime ZonedDateTime
+- eventTitle String
+- eventBody String
+}
+
+class UserCacheKey {
+- userName String
+}
+class UserDaoCache {
+- userCache LoadingCache<UserCacheKey,Optional<User>>
++ Optional<User> getUser(String)
++ void cacheUser(User)
++ void invalidateUser(String)
+}
+class User {
+- String userId
+- String username
+- String hash
+- String salt
+}
+class UserDao {
+- DynamoDBMapper dynamoDBMapper
++ User addUser(User)
++ Optional<User> getUser(UserCacheKey)
++ void deleteUser(User)
++ boolean validateUser(String)
+}
+class EventDao {
+- DynamoDBMapper dynamoDBMapper
++ void addEvent(Event)
+}
+
+@enduml

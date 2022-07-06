@@ -1,0 +1,20 @@
+@startuml
+title Entity Relationship Diagram
+entity Event {
+    * String eventId
+    --
+    * String userId
+    * ZonedDateTime srtDateTime
+    * ZonedDateTime endDateTime
+    String eventTitle
+    String eventBody
+}
+entity User {
+    * String userId
+    --
+    * String username
+    * String hash
+    * String salt
+}
+User "1 " --{ "0..*" Event
+@enduml

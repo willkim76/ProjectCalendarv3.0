@@ -1,27 +1,27 @@
 package com.personal.projectcalendar.converters.models;
 
-import com.personal.projectcalendar.types.User;
-import com.personal.projectcalendar.types.models.UserModel;
+import com.personal.projectcalendar.models.User;
+import com.personal.projectcalendar.models.dtos.UserDto;
 
 import static com.personal.projectcalendar.utilities.UserUtilities.generateUserId;
 
-public class UserModelConverter {
+public class UserDtoConverter {
 
-    private UserModelConverter() {}
+    private UserDtoConverter() {}
 
-    public static User convertToUser(UserModel userModel,
+    public static User convertToUser(UserDto userDTO,
                                      String theHash,
                                      String theSalt) {
         return User.builder()
                 .withUserId(generateUserId())
-                .withUsername(userModel.getUsername())
+                .withUsername(userDTO.getUsername())
                 .withHash(theHash)
                 .withSalt(theSalt)
                 .build();
     }
 
-    public static UserModel revertToUserModel(User user) {
-        return UserModel.builder()
+    public static UserDto revertToUserModel(User user) {
+        return UserDto.builder()
                 .withUsername(user.getUsername())
                 .withPassword(null)
                 .build();

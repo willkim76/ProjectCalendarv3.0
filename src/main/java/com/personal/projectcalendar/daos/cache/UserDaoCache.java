@@ -4,7 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.personal.projectcalendar.daos.UserDao;
-import com.personal.projectcalendar.types.User;
+import com.personal.projectcalendar.models.User;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;

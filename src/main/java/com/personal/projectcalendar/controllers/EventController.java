@@ -4,9 +4,9 @@ import com.personal.projectcalendar.ProjectCalendarApplication;
 import com.personal.projectcalendar.activities.AddEventActivity;
 import com.personal.projectcalendar.activities.GetEventsActivity;
 import com.personal.projectcalendar.dependencies.ServiceComponents;
-import com.personal.projectcalendar.types.models.EventModel;
-import com.personal.projectcalendar.types.requests.AddEventRequest;
-import com.personal.projectcalendar.types.requests.GetEventsRequest;
+import com.personal.projectcalendar.models.dtos.EventDto;
+import com.personal.projectcalendar.models.requests.AddEventRequest;
+import com.personal.projectcalendar.models.requests.GetEventsRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +35,12 @@ public class EventController {
     @PostMapping(value = "events")
     public ResponseEntity<?> addEvent(
             @CookieValue (value = "userId", defaultValue = "STOP") String userId,
-            @Valid @RequestBody EventModel eventModel,
+            @Valid @RequestBody EventDto eventDTO,
             HttpServletResponse response) {
         AddEventActivity activity = components.provideAddEventActivity();
 
         AddEventRequest request = AddEventRequest.builder()
-                .withEventModel(eventModel)
+                .withEventModel(eventDTO)
                 .withUserId("the userId from cookie")
                 .build();
 

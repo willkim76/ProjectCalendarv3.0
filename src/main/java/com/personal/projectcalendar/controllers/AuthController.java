@@ -3,9 +3,9 @@ package com.personal.projectcalendar.controllers;
 import com.personal.projectcalendar.ProjectCalendarApplication;
 import com.personal.projectcalendar.activities.UserLoginActivity;
 import com.personal.projectcalendar.dependencies.ServiceComponents;
-import com.personal.projectcalendar.types.models.UserModel;
-import com.personal.projectcalendar.types.requests.UserLoginRequest;
-import com.personal.projectcalendar.types.responses.UserLoginResponse;
+import com.personal.projectcalendar.models.dtos.UserDto;
+import com.personal.projectcalendar.models.requests.UserLoginRequest;
+import com.personal.projectcalendar.models.responses.UserLoginResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +16,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-public class AuthenticationController {
+public class AuthController {
     private static final ServiceComponents components = ProjectCalendarApplication.components;
-    private static final int COOKIE_EXPIRATION_HOURS = 5;
+    private static final int COOKIE_EXPIRATION_HOURS    = 5;
+    private static final String USERNAME_DNE_ERROR_MSG  = "Username does not exist!";
+    private static final String PASSWORD_INC_ERROR_MSG  = "Password is incorrect!";
 
     @PostMapping(value = "auth/login")
     public ResponseEntity<?> userLogin(
             @CookieValue(value = "userId", defaultValue = "STOP") String userId,
-            @Valid @RequestBody UserModel userModel,
+            @Valid @RequestBody UserDto userDTO,
             HttpServletResponse httpResponse) {
 
         UserLoginActivity activity = components.provideUserLoginActivity();
 
         UserLoginRequest request = UserLoginRequest.builder()
-                .withUserModel(userModel)
+                .withUserModel(userDTO)
                 .build();
 
         UserLoginResponse response = activity.execute(request);
 
         if (response.getMessage().equals("USERNAME DNE")) {
-            String errorMessage = "Username does not exist!";
-            return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(USERNAME_DNE_ERROR_MSG, HttpStatus.UNAUTHORIZED);
         }
         if (response.getMessage().equals("PASSWORD INC")) {
-            String errorMessage = "Password is incorrect!";
-            return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(PASSWORD_INC_ERROR_MSG, HttpStatus.UNAUTHORIZED);
         }
 
         httpResponse.addCookie(

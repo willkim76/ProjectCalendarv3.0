@@ -1,7 +1,7 @@
 package com.personal.projectcalendar.daos;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.personal.projectcalendar.types.Event;
+import com.personal.projectcalendar.models.Event;
 
 public class EventDao {
     private final DynamoDBMapper dynamoDBMapper;

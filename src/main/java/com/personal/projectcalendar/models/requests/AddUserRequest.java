@@ -1,16 +1,16 @@
-package com.personal.projectcalendar.types.requests;
+package com.personal.projectcalendar.models.requests;
 
-import com.personal.projectcalendar.types.models.UserModel;
+import com.personal.projectcalendar.models.dtos.UserDto;
 
 public class AddUserRequest {
-    private UserModel userModel;
+    private UserDto userDto;
 
     private AddUserRequest(AddUserRequest.Builder builder) {
-        this.userModel = builder.userModel;
+        this.userDto = builder.userDTO;
     }
 
-    public UserModel getUserModel() {
-        return userModel;
+    public UserDto getUserModel() {
+        return userDto;
     }
 
     public static AddUserRequest.Builder builder() {
@@ -18,12 +18,12 @@ public class AddUserRequest {
     }
 
     public static class Builder {
-        private UserModel userModel;
+        private UserDto userDTO;
 
         private Builder() {}
 
-        public Builder withUserModel(UserModel theUserModel) {
-            this.userModel = theUserModel;
+        public Builder withUserModel(UserDto theUserDto) {
+            this.userDTO = theUserDto;
             return this;
         }
 

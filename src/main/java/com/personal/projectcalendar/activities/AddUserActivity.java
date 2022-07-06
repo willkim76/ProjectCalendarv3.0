@@ -3,10 +3,10 @@ package com.personal.projectcalendar.activities;
 import com.personal.projectcalendar.daos.UserDao;
 import com.personal.projectcalendar.daos.cache.UserDaoCache;
 import com.personal.projectcalendar.security.hashable.Hashable;
-import com.personal.projectcalendar.types.User;
-import com.personal.projectcalendar.types.models.UserModel;
-import com.personal.projectcalendar.types.requests.AddUserRequest;
-import com.personal.projectcalendar.types.responses.AddUserResponse;
+import com.personal.projectcalendar.models.User;
+import com.personal.projectcalendar.models.dtos.UserDto;
+import com.personal.projectcalendar.models.requests.AddUserRequest;
+import com.personal.projectcalendar.models.responses.AddUserResponse;
 
 import javax.inject.Inject;
 
@@ -30,7 +30,7 @@ public class AddUserActivity {
         String newUsername      = request.getUserModel().getUsername();
         String newPassword      = request.getUserModel().getPassword();
         String userId           = null;
-        UserModel newUserModel  = null;
+        UserDto newUserDto = null;
 
         if (userDaoCache.getUser(newUsername).isEmpty()) {
             String userSalt = hashable.generateSalt();
@@ -48,7 +48,7 @@ public class AddUserActivity {
             userDao.addUser(newUser);
             userDaoCache.cacheUser(newUser);
 
-            newUserModel = UserModel.builder()
+            newUserDto = UserDto.builder()
                     .withUsername(newUsername)
                     .withPassword(newPassword)
                     .build();
@@ -56,7 +56,7 @@ public class AddUserActivity {
 
         return AddUserResponse.builder()
                 .withUserid(userId)
-                .withUserModel(newUserModel)
+                .withUserModel(newUserDto)
                 .build();
     }
 }

@@ -1,20 +1,20 @@
-package com.personal.projectcalendar.types.models;
+package com.personal.projectcalendar.models.dtos;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class UserModel {
-    @NotNull
-    @NotBlank
+public class UserDto {
+    @NotEmpty(message = "A username is required.")
+    @Size(min = 2, max = 30, message = "The length of the username must be between 2 and 30 characters.")
     private String username;
-    @NotNull
-    @NotBlank
+    @NotEmpty(message = "A password is required.")
+    @Size(min = 5, max = 30, message = "The length of the password must be between 5 and 30 characters.")
     private String password;
 
-    public UserModel() {}
+    public UserDto() {}
 
-    public UserModel(UserModel.Builder builder) {
+    public UserDto(UserDto.Builder builder) {
         this.username = builder.username;
         this.password = builder.password;
     }
@@ -40,12 +40,12 @@ public class UserModel {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserModel)) {
+        if (!(o instanceof UserDto)) {
             return false;
         }
-        UserModel userModel = (UserModel) o;
-        return Objects.equals(username, userModel.username) &&
-                Objects.equals(password, userModel.password);
+        UserDto userDTO = (UserDto) o;
+        return Objects.equals(username, userDTO.username) &&
+                Objects.equals(password, userDTO.password);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class UserModel {
                 password);
     }
 
-    public static UserModel.Builder builder() {
-        return new UserModel.Builder();
+    public static UserDto.Builder builder() {
+        return new UserDto.Builder();
     }
 
     public static class Builder {
@@ -75,8 +75,8 @@ public class UserModel {
             return this;
         }
 
-        public UserModel build() {
-            return new UserModel(this);
+        public UserDto build() {
+            return new UserDto(this);
         }
     }
 }

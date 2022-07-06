@@ -1,22 +1,22 @@
-package com.personal.projectcalendar.types.responses;
+package com.personal.projectcalendar.models.responses;
 
-import com.personal.projectcalendar.types.models.UserModel;
+import com.personal.projectcalendar.models.dtos.UserDto;
 
 public class AddUserResponse {
     String userId;
-    UserModel userModel;
+    UserDto userDto;
 
     private AddUserResponse(AddUserResponse.Builder builder) {
         this.userId = builder.userId;
-        this.userModel = builder.userModel;
+        this.userDto = builder.userDTO;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public UserModel getUserModel() {
-        return userModel;
+    public UserDto getUserModel() {
+        return userDto;
     }
 
     public static AddUserResponse.Builder builder() {
@@ -25,7 +25,7 @@ public class AddUserResponse {
 
     public static class Builder {
         private String userId;
-        private UserModel userModel;
+        private UserDto userDTO;
 
         private Builder() {}
 
@@ -34,8 +34,8 @@ public class AddUserResponse {
             return this;
         }
 
-        public Builder withUserModel(UserModel theUserModel) {
-            this.userModel = theUserModel;
+        public Builder withUserModel(UserDto theUserDto) {
+            this.userDTO = theUserDto;
             return this;
         }
 

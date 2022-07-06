@@ -4,9 +4,9 @@ import com.personal.projectcalendar.ProjectCalendarApplication;
 import com.personal.projectcalendar.activities.AddUserActivity;
 import com.personal.projectcalendar.activities.EditUserActivity;
 import com.personal.projectcalendar.dependencies.ServiceComponents;
-import com.personal.projectcalendar.types.models.UserModel;
-import com.personal.projectcalendar.types.requests.AddUserRequest;
-import com.personal.projectcalendar.types.responses.AddUserResponse;
+import com.personal.projectcalendar.models.dtos.UserDto;
+import com.personal.projectcalendar.models.requests.AddUserRequest;
+import com.personal.projectcalendar.models.responses.AddUserResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +24,13 @@ public class UserController {
     @PostMapping(value = "users")
     public ResponseEntity<?> createUser(
             @CookieValue(value = "userId", defaultValue = "STOP") String userId,
-            @Valid @RequestBody UserModel userModel,
+            @Valid @RequestBody UserDto userDTO,
             HttpServletResponse httpResponse) {
 
         AddUserActivity activity = components.provideAddUserActivity();
 
         AddUserRequest request = AddUserRequest.builder()
-                .withUserModel(userModel)
+                .withUserModel(userDTO)
                 .build();
 
         AddUserResponse response = activity.execute(request);
@@ -54,7 +54,7 @@ public class UserController {
     @PutMapping(value = "users")
     public ResponseEntity<?> updateUser(
             @CookieValue(value = "userId", defaultValue = "STOP") String userId,
-            @Valid @RequestBody UserModel userModel,
+            @Valid @RequestBody UserDto userDTO,
             HttpServletResponse response) {
 
         EditUserActivity activity = components.provideEditUserActivity();

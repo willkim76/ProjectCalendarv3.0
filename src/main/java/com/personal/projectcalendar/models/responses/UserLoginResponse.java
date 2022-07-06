@@ -1,4 +1,4 @@
-package com.personal.projectcalendar.types.responses;
+package com.personal.projectcalendar.models.responses;
 
 public class UserLoginResponse {
     private final String message;

@@ -2,8 +2,8 @@ package com.personal.projectcalendar.activities;
 
 import com.personal.projectcalendar.daos.EventDao;
 import com.personal.projectcalendar.daos.UserDao;
-import com.personal.projectcalendar.types.requests.GetEventsRequest;
-import com.personal.projectcalendar.types.responses.GetEventsResponse;
+import com.personal.projectcalendar.models.requests.GetEventsRequest;
+import com.personal.projectcalendar.models.responses.GetEventsResponse;
 
 import javax.inject.Inject;
 

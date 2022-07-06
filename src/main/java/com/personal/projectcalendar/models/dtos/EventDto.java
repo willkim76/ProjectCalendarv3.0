@@ -1,24 +1,21 @@
-package com.personal.projectcalendar.types.models;
+package com.personal.projectcalendar.models.dtos;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 /**
  * Defines the
  */
-public class EventModel {
-    @NotBlank
-    @NotNull
+public class EventDto {
+    @NotEmpty
     private String startDateTime;
-    @NotBlank
-    @NotNull
+    @NotEmpty
     private String endDateTime;
 
     private String eventTitle;
     private String eventBody;
 
-    public EventModel() {}
+    public EventDto() {}
 
     public String getStartDateTime() {
         return startDateTime;
@@ -57,10 +54,10 @@ public class EventModel {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof EventModel)) {
+        if (!(o instanceof EventDto)) {
             return false;
         }
-        EventModel that = (EventModel) o;
+        EventDto that = (EventDto) o;
         return Objects.equals(startDateTime, that.startDateTime) &&
                 Objects.equals(endDateTime, that.endDateTime) &&
                 Objects.equals(eventTitle, that.eventTitle) &&

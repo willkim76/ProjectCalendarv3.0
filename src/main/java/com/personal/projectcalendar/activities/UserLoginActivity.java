@@ -2,10 +2,10 @@ package com.personal.projectcalendar.activities;
 
 import com.personal.projectcalendar.daos.cache.UserDaoCache;
 import com.personal.projectcalendar.security.hashable.Hashable;
-import com.personal.projectcalendar.types.User;
-import com.personal.projectcalendar.types.models.UserModel;
-import com.personal.projectcalendar.types.requests.UserLoginRequest;
-import com.personal.projectcalendar.types.responses.UserLoginResponse;
+import com.personal.projectcalendar.models.User;
+import com.personal.projectcalendar.models.dtos.UserDto;
+import com.personal.projectcalendar.models.requests.UserLoginRequest;
+import com.personal.projectcalendar.models.responses.UserLoginResponse;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class UserLoginActivity {
     }
 
     public UserLoginResponse execute(UserLoginRequest request) {
-        UserModel userToVerify = request.getUserModel();
+        UserDto userToVerify = request.getUserModel();
         Optional<User> user = userDaoCache.getUser(userToVerify.getUsername());
 
         String message = "USERNAME DNE";
