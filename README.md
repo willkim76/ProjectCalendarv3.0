@@ -30,6 +30,7 @@ of the API are based on addressing the user stories below.
 ![User Events ERD Diagram.](src/main/resources/User_Events_ERD.png)
 
 ### Hypothetical Business Requirements
+#### User Stories:
 * As a user I want to be able to create a User account
 * As a user I want to be able to modify a User account
 * As a user I want to be able to delete a User account
