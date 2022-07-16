@@ -13,10 +13,10 @@ public class UserDtoConverter {
                                      String theHash,
                                      String theSalt) {
         return User.builder()
-                .withUserId(generateUserId())
-                .withUsername(userDTO.getUsername())
-                .withHash(theHash)
-                .withSalt(theSalt)
+                .userId(generateUserId())
+                .username(userDTO.getUsername())
+                .hash(theHash)
+                .salt(theSalt)
                 .build();
     }
 

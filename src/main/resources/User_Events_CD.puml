@@ -32,7 +32,6 @@ class UserDao {
 }
 class EventDao {
 - DynamoDBMapper dynamoDBMapper
-+ void addEvent(Event)
 }
 
 @enduml

@@ -2,72 +2,45 @@ package com.personal.projectcalendar.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @DynamoDBTable(tableName = "Calendar_users")
 public class User {
-    private String userId;
-    private String username;
-    private String hash;
-    private String salt;
-
-    /**
-     * No argument constructor for DynamoDB.
-     */
-    public User() {}
-
-    private User(User.Builder builder) {
-        this.userId = builder.userId;
-        this.username   = builder.username;
-        this.hash       = builder.hash;
-        this.salt       = builder.salt;
-    }
-
     @DynamoDBHashKey(attributeName = "user_id")
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
+    private String userId;
     @DynamoDBAttribute(attributeName = "user_name")
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "user_name-index")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
+    private String username;
     @DynamoDBAttribute(attributeName = "user_hash")
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
+    private String hash;
     @DynamoDBAttribute(attributeName = "user_salt")
-    public String getSalt() {
-        return salt;
-    }
+    private String salt;
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", hash='" + hash + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof User)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
         User user = (User) o;
         return userId.equals(user.userId) &&
                 username.equals(user.username) &&
@@ -77,47 +50,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                userId,
-                username,
-                hash,
-                salt);
-    }
-
-    public static User.Builder builder() {
-        return new User.Builder();
-    }
-
-    public static class Builder {
-        private String userId;
-        private String username;
-        private String hash;
-        private String salt;
-
-        private Builder() {}
-
-        public Builder withUserId(String theUserId) {
-            this.userId = theUserId;
-            return this;
-        }
-
-        public Builder withUsername(String theUsername) {
-            this.username = theUsername;
-            return this;
-        }
-
-        public Builder withHash(String theHash) {
-            this.hash = theHash;
-            return this;
-        }
-
-        public Builder withSalt(String theSalt) {
-            this.salt = theSalt;
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
+        return Objects.hash(userId, username, hash, salt);
     }
 }

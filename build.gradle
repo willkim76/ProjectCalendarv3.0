@@ -37,6 +37,13 @@ dependencies {
     // https://mvnrepository.com/artifact/com.palantir.gradle.docker/gradle-docker
     implementation group: 'com.palantir.gradle.docker', name: 'gradle-docker', version: '0.33.0'
 
+    // https://projectlombok.org/setup/gradle
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
     implementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'

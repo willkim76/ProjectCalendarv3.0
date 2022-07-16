@@ -37,10 +37,10 @@ public class AddUserActivity {
             String userHash = hashable.generateHash(newPassword, userSalt);
 
             User newUser = User.builder()
-                    .withUserId(generateUserId())
-                    .withUsername(newUsername)
-                    .withHash(userHash)
-                    .withSalt(userSalt)
+                    .userId(generateUserId())
+                    .username(newUsername)
+                    .hash(userHash)
+                    .salt(userSalt)
                     .build();
 
             userId = newUser.getUserId();
